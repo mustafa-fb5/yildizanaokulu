@@ -622,7 +622,7 @@ export default function Home() {
             <div className="lg:col-span-7 rounded-3xl overflow-hidden shadow-2xl border-2 border-white/20 min-h-[350px]">
               <iframe
                 title="Mahmutbey Yıldız Anaokulu Harita Konumu"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3008.9723049187315!2d28.825682976569115!3d41.0478142713448!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14caa5452d9dbd07%3A0x7d6a59bc6551b9e0!2zTWFobXV0YmV5LCDEsG7Dtm7DvCBDZC4gTm86NDIsIDM0MjE3IEJhxJ9jxLFsYXIvxLBzdGFuYnVs!5e0!3m2!1str!2str!4v1700000000000!5m2!1str!2str"
+                src="https://maps.google.com/maps?q=Mahmutbey+Mahallesi+Karao%C4%9Flano%C4%9Flu+Caddesi+2602+Sokak+No+1%2FC+Ba%C4%9Fc%C4%B1lar+%C4%B0stanbul&t=&z=16&ie=UTF8&iwloc=&output=embed"
                 className="w-full h-full min-h-[380px] border-0 grayscale hover:grayscale-0 transition-all duration-500"
                 allowFullScreen
                 loading="lazy"

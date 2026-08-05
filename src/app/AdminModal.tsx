@@ -157,7 +157,7 @@ export const DEFAULT_SITE_TEXTS: SiteTextSettings = {
   phone: "0552 150 64 10",
   whatsappPhone: "05414470608",
   email: "info@mahmutbeyyildizanaokulu.k12.tr",
-  address: "Mahmutbey Mh. İnönü Cd. No: 42, Bağcılar / İSTANBUL",
+  address: "Mahmutbey Mahallesi, Karaoğlanoğlu Caddesi, 2602 Sokak, No 1/C Bağcılar-İstanbul",
   workingHours: "Hafta içi: 09:00 - 18:00 | Hafta sonu: 10:00 - 15:00",
   
   aboutBadgeText: "Hakkımızda",
