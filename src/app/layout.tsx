@@ -19,6 +19,11 @@ export const metadata: Metadata = {
     locale: "tr_TR",
     type: "website",
   },
+  other: {
+    "Cache-Control": "no-cache, no-store, must-revalidate",
+    "Pragma": "no-cache",
+    "Expires": "0",
+  },
 };
 
 export default function RootLayout({
