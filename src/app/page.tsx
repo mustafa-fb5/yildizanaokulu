@@ -57,13 +57,35 @@ export default function Home() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
 
-  // GERÇEK ZAMANLI (REALTIME) FIRESTORE DİNLEYİCİLERİ - Tüm cihazlar arasında anında senkronize olur!
+  // GERÇEK ZAMANLI (REALTIME) FIRESTORE DİNLEYİCİLERİ & ÖNBELLEK
   useEffect(() => {
+    // Sayfa ilk yüklendiğinde önbellekteki yazıları göster
+    if (typeof window !== "undefined") {
+      const cachedTexts = localStorage.getItem("site_texts_cache");
+      if (cachedTexts) {
+        try {
+          setSiteTexts((prev) => ({ ...prev, ...JSON.parse(cachedTexts) }));
+        } catch (e) {}
+      }
+      const cachedGallery = localStorage.getItem("gallery_cache");
+      if (cachedGallery) {
+        try {
+          const parsed = JSON.parse(cachedGallery);
+          if (parsed.categories) setGalleryCategories(parsed.categories);
+          if (parsed.items) setGalleryItems(parsed.items);
+        } catch (e) {}
+      }
+    }
+
     // 1. Site Metinleri Canlı Dinleyicisi
     const unsubTexts = onSnapshot(doc(db, "settings", "site_texts"), (docSnap) => {
       if (docSnap.exists()) {
         const data = docSnap.data();
-        setSiteTexts({ ...DEFAULT_SITE_TEXTS, ...data });
+        const merged = { ...DEFAULT_SITE_TEXTS, ...data };
+        setSiteTexts(merged);
+        if (typeof window !== "undefined") {
+          localStorage.setItem("site_texts_cache", JSON.stringify(merged));
+        }
       }
     }, (err) => console.warn("Texts realtime listener warning:", err));
 
@@ -73,6 +95,9 @@ export default function Home() {
         const data = docSnap.data();
         if (data.categories) setGalleryCategories(data.categories);
         if (data.items) setGalleryItems(data.items);
+        if (typeof window !== "undefined") {
+          localStorage.setItem("gallery_cache", JSON.stringify(data));
+        }
       }
     }, (err) => console.warn("Gallery realtime listener warning:", err));
 

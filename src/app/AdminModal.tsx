@@ -430,13 +430,17 @@ export default function AdminModal({ isOpen, onClose }: AdminModalProps) {
         const cached = localStorage.getItem("site_texts_cache");
         if (cached) {
           setSiteTexts({ ...DEFAULT_SITE_TEXTS, ...JSON.parse(cached) });
-          return;
         }
       }
       const docRef = doc(db, "settings", "site_texts");
       const snap = await getDoc(docRef);
       if (snap.exists()) {
-        setSiteTexts({ ...DEFAULT_SITE_TEXTS, ...snap.data() });
+        const data = snap.data();
+        const merged = { ...DEFAULT_SITE_TEXTS, ...data };
+        setSiteTexts(merged);
+        if (typeof window !== "undefined") {
+          localStorage.setItem("site_texts_cache", JSON.stringify(merged));
+        }
       }
     } catch (e) {
       console.error("Metin ayarları yükleme hatası:", e);
