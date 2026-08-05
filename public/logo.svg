@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="40 10 380 180" width="100%" height="100%">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&amp;family=Montserrat:wght@800;900&amp;display=swap');
+      .txt-mahmutbey { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 16px; fill: #111111; letter-spacing: 2px; }
+      .txt-yildiz { font-family: 'Fredoka', cursive, sans-serif; font-weight: 700; font-size: 52px; }
+      .txt-anaokulu { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 22px; fill: #111111; letter-spacing: 5px; }
+    </style>
+  </defs>
+
+  <!-- YILDIZ VE ETRAFINDAYKI RENKLİ NOKTALAR (İŞINLAR) -->
+  <g transform="translate(110, 100)">
+    
+    <!-- Mor Çerçeveli Yıldız -->
+    <path d="M 0,-52 L 15,-15 L 54,-10 L 25,18 L 34,57 L 0,35 L -34,57 L -25,18 L -54,-10 L -15,-15 Z"
+          fill="none" stroke="#8c125e" stroke-width="12" stroke-linejoin="round" stroke-linecap="round" />
+
+    <!-- Etraftaki Işın Noktaları -->
+    <!-- Üst Mavi Noktalar -->
+    <circle cx="0" cy="-68" r="3.5" fill="#00a8e8" />
+    <circle cx="0" cy="-78" r="5" fill="#00a8e8" />
+    <circle cx="0" cy="-88" r="2.5" fill="#00a8e8" />
+
+    <!-- Sağ Üst Turuncu Noktalar -->
+    <circle cx="32" cy="-52" r="4.5" fill="#f7931e" />
+    <circle cx="43" cy="-63" r="3" fill="#f7931e" />
+
+    <!-- Sol Üst Yeşil Noktalar -->
+    <circle cx="-32" cy="-52" r="4.5" fill="#8cc63f" />
+    <circle cx="-43" cy="-63" r="3" fill="#8cc63f" />
+
+    <!-- Sol Pembe/Kırmızı Noktalar -->
+    <circle cx="-68" cy="-10" r="4" fill="#e6005c" />
+    <circle cx="-80" cy="-15" r="2.5" fill="#e6005c" />
+
+    <!-- Sol Alt Turkuaz Noktalar -->
+    <circle cx="-58" cy="32" r="4" fill="#00b4d8" />
+    <circle cx="-70" cy="38" r="2.5" fill="#00b4d8" />
+
+    <!-- Alt Mor Noktalar -->
+    <circle cx="-38" cy="65" r="4.5" fill="#6b114d" />
+    <circle cx="-46" cy="74" r="2.5" fill="#6b114d" />
+
+    <!-- Alt Kırmızı Noktalar -->
+    <circle cx="0" cy="68" r="4.5" fill="#d90429" />
+    <circle cx="0" cy="78" r="3" fill="#d90429" />
+  </g>
+
+  <!-- SAĞ TARAF METİNLER (MAHMUTBEY YILDIZ ANAOKULU) -->
+  <g transform="translate(195, 70)">
+    <!-- MAHMUTBEY -->
+    <text x="0" y="0" class="txt-mahmutbey">MAHMUTBEY</text>
+
+    <!-- YILDIZ (HER HARF KENDİ RENGİNDE) -->
+    <g transform="translate(0, 46)">
+      <text class="txt-yildiz">
+        <tspan fill="#7ac143">Y</tspan><tspan fill="#f7931e">ı</tspan><tspan fill="#8c125e">l</tspan><tspan fill="#00a8e8">d</tspan><tspan fill="#e6005c">ı</tspan><tspan fill="#00a896">z</tspan>
+      </text>
+    </g>
+
+    <!-- ANAOKULU -->
+    <text x="0" y="74" class="txt-anaokulu">ANAOKULU</text>
+  </g>
+</svg>
