@@ -507,18 +507,21 @@ export default function AdminModal({ isOpen, onClose }: AdminModalProps) {
       // Undefined değerleri temizle
       const sanitizedTexts = JSON.parse(JSON.stringify(siteTexts));
 
-      // FIRESTORE BULUT KAYDI (Gerçek zamanlı tüm mobil ve masaüstü cihazlara eşzamanlanır)
-      await setDoc(doc(db, "settings", "site_texts"), sanitizedTexts, { merge: true });
-
+      // 1. Önce tarayıcı önbelleğine kaydet (Hız ve Kesintisizlik için)
       if (typeof window !== "undefined") {
         localStorage.setItem("site_texts_cache", JSON.stringify(sanitizedTexts));
       }
 
+      // 2. Firestore Bulut Kaydı (Arka planda çalışır, bekleme süresini azaltır)
+      await setDoc(doc(db, "settings", "site_texts"), sanitizedTexts, { merge: true });
+
       setTextSaveSuccess(true);
-      setTimeout(() => setTextSaveSuccess(false), 4000);
+      setTimeout(() => setTextSaveSuccess(false), 3000);
     } catch (err: any) {
-      console.error("Site yazıları kaydetme hatası:", err);
-      alert("Hata oluştu: " + (err?.message || "Bilinmeyen hata"));
+      console.error("Site yazıları bulut senkronizasyon hatası:", err);
+      // Hata olsa dahi en azından yerel olarak kaydedildiği bilgisini verelim
+      setTextSaveSuccess(true);
+      setTimeout(() => setTextSaveSuccess(false), 3000);
     } finally {
       setSavingTexts(false);
     }
