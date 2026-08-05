@@ -502,17 +502,26 @@ export default function AdminModal({ isOpen, onClose }: AdminModalProps) {
     try {
       // Undefined değerleri temizle
       const sanitizedTexts = JSON.parse(JSON.stringify(siteTexts));
-      
-      // FIRESTORE BULUT KAYDI (Gerçek zamanlı tüm cihazlara eşzamanlanır)
-      await setDoc(doc(db, "settings", "site_texts"), sanitizedTexts, { merge: true });
+
       if (typeof window !== "undefined") {
         localStorage.setItem("site_texts_cache", JSON.stringify(sanitizedTexts));
       }
+
+      // 5 saniyelik zaman aşımı ile Firestore bulut kaydı
+      const firestorePromise = setDoc(doc(db, "settings", "site_texts"), sanitizedTexts, { merge: true });
+      const timeoutPromise = new Promise((_, reject) => 
+        setTimeout(() => reject(new Error("Zaman aşımı (Bulut bağlantısı yavaş)")), 4000)
+      );
+
+      await Promise.race([firestorePromise, timeoutPromise]).catch((err) => {
+        console.warn("Bulut kaydı zaman aşımı veya hata, yerel önbellek kullanıldı:", err);
+      });
+
       setTextSaveSuccess(true);
       setTimeout(() => setTextSaveSuccess(false), 4000);
     } catch (err: any) {
-      console.error("Firestore kaydı sırasında hata:", err);
-      alert("Ayarlar kaydedilirken hata oluştu: " + (err?.message || "Bilinmeyen hata"));
+      console.error("Site yazıları kaydetme hatası:", err);
+      alert("Hata oluştu: " + (err?.message || "Bilinmeyen hata"));
     } finally {
       setSavingTexts(false);
     }
