@@ -500,13 +500,19 @@ export default function AdminModal({ isOpen, onClose }: AdminModalProps) {
     setTextSaveSuccess(false);
 
     try {
+      // Undefined değerleri temizle
+      const sanitizedTexts = JSON.parse(JSON.stringify(siteTexts));
+      
       // FIRESTORE BULUT KAYDI (Gerçek zamanlı tüm cihazlara eşzamanlanır)
-      await setDoc(doc(db, "settings", "site_texts"), siteTexts, { merge: true });
+      await setDoc(doc(db, "settings", "site_texts"), sanitizedTexts, { merge: true });
+      if (typeof window !== "undefined") {
+        localStorage.setItem("site_texts_cache", JSON.stringify(sanitizedTexts));
+      }
       setTextSaveSuccess(true);
       setTimeout(() => setTextSaveSuccess(false), 4000);
-    } catch (e: any) {
-      console.error("Firestore kaydı sırasında hata:", e);
-      alert("Ayarlar kaydedilirken hata oluştu: " + e?.message);
+    } catch (err: any) {
+      console.error("Firestore kaydı sırasında hata:", err);
+      alert("Ayarlar kaydedilirken hata oluştu: " + (err?.message || "Bilinmeyen hata"));
     } finally {
       setSavingTexts(false);
     }
