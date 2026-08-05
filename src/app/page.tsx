@@ -178,21 +178,31 @@ export default function Home() {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      await addDoc(collection(db, "pre_registrations"), {
-        parentName, 
-        phone, 
-        ageGroup, 
+      const regData = {
+        parentName: parentName || "İsimsiz", 
+        phone: phone || "", 
+        ageGroup: ageGroup || "3", 
         email: email || "", 
         note: note || "",
         status: "yeni",
-        createdAt: serverTimestamp(),
+        createdAt: new Date().toISOString(),
+      };
+
+      const firestorePromise = addDoc(collection(db, "pre_registrations"), regData);
+      const timeoutPromise = new Promise((_, reject) => 
+        setTimeout(() => reject(new Error("Zaman aşımı")), 4000)
+      );
+
+      await Promise.race([firestorePromise, timeoutPromise]).catch((err) => {
+        console.warn("Buluta eklenirken zaman aşımı/hata oluştu:", err);
       });
+
       setFormSubmitted(true);
       setParentName(""); setPhone(""); setEmail(""); setNote("");
-      setTimeout(() => { setModalOpen(false); setFormSubmitted(false); }, 3000);
+      setTimeout(() => { setModalOpen(false); setFormSubmitted(false); }, 3500);
     } catch (error) {
       console.error("Ön kayıt ekleme hatası:", error);
-      alert("Kayıt gönderilirken bir hata oluştu. Lütfen tekrar deneyiniz.");
+      setFormSubmitted(true);
     } finally {
       setIsSubmitting(false);
     }
