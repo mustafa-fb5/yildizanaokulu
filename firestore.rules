@@ -1,0 +1,24 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Site ayarları (metinler, galeri kategorileri, admin credentials)
+    match /settings/{document=**} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // Ön kayıt başvuruları
+    match /pre_registrations/{document=**} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // Galeri öğeleri koleksiyonu
+    match /gallery_items/{document=**} {
+      allow read: if true;
+      allow write: if true;
+    }
+  }
+}

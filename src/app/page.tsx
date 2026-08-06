@@ -89,21 +89,33 @@ export default function Home() {
       }
     }, (err) => console.warn("Texts realtime listener warning:", err));
 
-    // 2. Galeri Canlı Dinleyicisi
+    // 2. Galeri Kategorileri Dinleyicisi
     const unsubGallery = onSnapshot(doc(db, "settings", "gallery"), (docSnap) => {
       if (docSnap.exists()) {
         const data = docSnap.data();
         if (data.categories) setGalleryCategories(data.categories);
-        if (data.items) setGalleryItems(data.items);
-        if (typeof window !== "undefined") {
-          localStorage.setItem("gallery_cache", JSON.stringify(data));
-        }
+        if (data.items) setGalleryItems((prev) => (prev.length === 0 ? data.items : prev));
       }
     }, (err) => console.warn("Gallery realtime listener warning:", err));
+
+    // 3. Galeri Öğeleri Canlı Koleksiyon Dinleyicisi (Mobil & Masaüstü Kesintisiz Eşzamanlama)
+    const unsubGalleryItems = onSnapshot(collection(db, "gallery_items"), (querySnapshot) => {
+      if (!querySnapshot.empty) {
+        const items: GalleryItem[] = [];
+        querySnapshot.forEach((docSnap) => {
+          items.push({ id: docSnap.id, ...docSnap.data() } as GalleryItem);
+        });
+        setGalleryItems(items);
+        if (typeof window !== "undefined") {
+          localStorage.setItem("gallery_items_cache", JSON.stringify(items));
+        }
+      }
+    }, (err) => console.warn("Gallery items realtime listener warning:", err));
 
     return () => {
       unsubTexts();
       unsubGallery();
+      unsubGalleryItems();
     };
   }, []);
 

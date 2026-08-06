@@ -455,15 +455,25 @@ export default function AdminModal({ isOpen, onClose }: AdminModalProps) {
           const parsed = JSON.parse(cached);
           if (parsed.categories) setCategories(parsed.categories);
           if (parsed.items) setGalleryItems(parsed.items);
-          return;
         }
       }
+
+      // Firestore'dan koleksiyonel canlı veriyi çek
+      const itemsSnap = await getDocs(collection(db, "gallery_items"));
+      if (!itemsSnap.empty) {
+        const fetchedItems: GalleryItem[] = [];
+        itemsSnap.forEach((docSnap) => {
+          fetchedItems.push({ id: docSnap.id, ...docSnap.data() } as GalleryItem);
+        });
+        setGalleryItems(fetchedItems);
+      }
+
       const docRef = doc(db, "settings", "gallery");
       const snap = await getDoc(docRef);
       if (snap.exists()) {
         const data = snap.data();
         if (data.categories) setCategories(data.categories);
-        if (data.items) setGalleryItems(data.items);
+        if (itemsSnap.empty && data.items) setGalleryItems(data.items);
       }
     } catch (e) {
       console.error("Galeri verileri yükleme hatası:", e);
@@ -497,6 +507,41 @@ export default function AdminModal({ isOpen, onClose }: AdminModalProps) {
     }
   };
 
+  // Görsel Sıkıştırma (Firestore 1MB limitine takılmaması ve Mobilde hızlı yüklenmesi için)
+  const compressImage = (file: File, maxWidth = 1000, quality = 0.75): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement("canvas");
+          let width = img.width;
+          let height = img.height;
+
+          if (width > maxWidth) {
+            height = Math.round((height * maxWidth) / width);
+            width = maxWidth;
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+
+          const ctx = canvas.getContext("2d");
+          if (ctx) {
+            ctx.drawImage(img, 0, 0, width, height);
+            resolve(canvas.toDataURL("image/jpeg", quality));
+          } else {
+            resolve(event.target?.result as string);
+          }
+        };
+        img.onerror = () => reject(new Error("Görsel okunamadı"));
+        img.src = event.target?.result as string;
+      };
+      reader.onerror = (err) => reject(err);
+      reader.readAsDataURL(file);
+    });
+  };
+
   // Site Texts Action
   const handleSaveSiteTexts = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -504,24 +549,21 @@ export default function AdminModal({ isOpen, onClose }: AdminModalProps) {
     setTextSaveSuccess(false);
 
     try {
-      // Undefined değerleri temizle
       const sanitizedTexts = JSON.parse(JSON.stringify(siteTexts));
 
-      // 1. Önce tarayıcı önbelleğine kaydet (Hız ve Kesintisizlik için)
+      // 1. Firestore Bulut Kaydı (Tüm mobil & masaüstü cihazlara eşzamanlanır)
+      await setDoc(doc(db, "settings", "site_texts"), sanitizedTexts, { merge: true });
+
+      // 2. Tarayıcı önbelleğine kaydet
       if (typeof window !== "undefined") {
         localStorage.setItem("site_texts_cache", JSON.stringify(sanitizedTexts));
       }
-
-      // 2. Firestore Bulut Kaydı (Arka planda çalışır, bekleme süresini azaltır)
-      await setDoc(doc(db, "settings", "site_texts"), sanitizedTexts, { merge: true });
 
       setTextSaveSuccess(true);
       setTimeout(() => setTextSaveSuccess(false), 3000);
     } catch (err: any) {
       console.error("Site yazıları bulut senkronizasyon hatası:", err);
-      // Hata olsa dahi en azından yerel olarak kaydedildiği bilgisini verelim
-      setTextSaveSuccess(true);
-      setTimeout(() => setTextSaveSuccess(false), 3000);
+      alert("Yazılar kaydedilirken hata oluştu. Lütfen internet bağlantınızı ve veritabanı izinlerini kontrol edin: " + err?.message);
     } finally {
       setSavingTexts(false);
     }
@@ -546,7 +588,7 @@ export default function AdminModal({ isOpen, onClose }: AdminModalProps) {
     setCategories(categories.filter((c) => c.id !== catId));
   };
 
-  // Cloudinary Upload Handler
+  // File Upload Handler (Otomatik Sıkıştırma ile)
   const [uploadingCloudinary, setUploadingCloudinary] = useState(false);
 
   const handleCloudinaryFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -555,9 +597,8 @@ export default function AdminModal({ isOpen, onClose }: AdminModalProps) {
 
     setUploadingCloudinary(true);
 
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      const imageUrl = reader.result as string;
+    try {
+      const compressedBase64 = await compressImage(file, 1000, 0.75);
       const targetCat = newImgCat || (categories[0] ? categories[0].id : "siniflar");
       const title = newImgTitle.trim() || file.name.replace(/\.[^/.]+$/, "");
 
@@ -565,17 +606,19 @@ export default function AdminModal({ isOpen, onClose }: AdminModalProps) {
         id: Date.now().toString(),
         title: title,
         category: targetCat,
-        img: imageUrl
+        img: compressedBase64
       };
 
       setGalleryItems((prev) => [newItem, ...prev]);
       setNewImgTitle("");
       setNewImgUrl("");
+      alert("Görsel optimize edilerek eklendi! Mobilde de görünmesi için lütfen 'Galeri Ayarlarını Kaydet' butonuna basınız.");
+    } catch (err: any) {
+      console.error("Görsel işleme hatası:", err);
+      alert("Görsel işlenirken bir hata oluştu: " + err?.message);
+    } finally {
       setUploadingCloudinary(false);
-      alert("Görsel listeye eklendi! Kalıcı olması için 'Galeri Ayarlarını Kaydet' butonuna basınız.");
-    };
-
-    reader.readAsDataURL(file);
+    }
   };
 
   const handleAddGalleryItem = () => {
@@ -604,16 +647,36 @@ export default function AdminModal({ isOpen, onClose }: AdminModalProps) {
     setGallerySaveSuccess(false);
 
     try {
-      // FIRESTORE BULUT KAYDI (Gerçek zamanlı tüm cihazlara eşzamanlanır)
+      // 1. Kategorileri kaydet
       await setDoc(doc(db, "settings", "gallery"), {
         categories,
-        items: galleryItems
       }, { merge: true });
+
+      // 2. Her bir galeri öğesini gallery_items koleksiyonuna tekil döküman olarak kaydet
+      const currentIds = new Set(galleryItems.map((item) => item.id));
+
+      // Mevcut koleksiyondaki öğeleri kontrol edip silinenleri temizle
+      const existingSnap = await getDocs(collection(db, "gallery_items"));
+      existingSnap.forEach((docSnap) => {
+        if (!currentIds.has(docSnap.id)) {
+          deleteDoc(doc(db, "gallery_items", docSnap.id)).catch(() => {});
+        }
+      });
+
+      // Öğeleri kaydet
+      for (const item of galleryItems) {
+        await setDoc(doc(db, "gallery_items", item.id), item, { merge: true });
+      }
+
+      if (typeof window !== "undefined") {
+        localStorage.setItem("gallery_cache", JSON.stringify({ categories, items: galleryItems }));
+      }
+
       setGallerySaveSuccess(true);
       setTimeout(() => setGallerySaveSuccess(false), 4000);
     } catch (e: any) {
-      console.error("Firestore galeri kaydı uyarısı:", e);
-      alert("Galeri ayarları kaydedilirken hata oluştu: " + e?.message);
+      console.error("Firestore galeri kaydı hatası:", e);
+      alert("Galeri ayarları kaydedilirken hata oluştu! Mobilde görünmeme nedeni: " + e?.message);
     } finally {
       setSavingGallery(false);
     }
