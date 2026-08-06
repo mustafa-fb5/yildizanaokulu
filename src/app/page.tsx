@@ -723,15 +723,7 @@ export default function Home() {
                     </select>
                   </div>
                 </div>
-                <div>
-                  <label className="block text-xs font-black text-slate-700 mb-1">E-Posta (Opsiyonel)</label>
-                  <input
-                    type="email" value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="ahmet@example.com"
-                    className="w-full px-4 py-2.5 rounded-xl border-2 border-slate-200 focus:outline-none focus:border-amber-400 text-slate-800 text-sm font-semibold"
-                  />
-                </div>
+
                 <div>
                   <label className="block text-xs font-black text-slate-700 mb-1">Notunuz</label>
                   <textarea

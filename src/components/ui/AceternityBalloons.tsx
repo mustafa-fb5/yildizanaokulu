@@ -3,38 +3,100 @@ import React from "react";
 import { motion } from "framer-motion";
 
 export const AceternityBalloons = () => {
-  // 14 Farklı canlı çocuk/anaokulu tonunda zıplayan & süzülen balonlar
+  // 8 Canlı, GPU optimizasyonlu balon (Takılmasız 60fps performans için)
   const balloons = [
-    { id: 1, size: "w-16 h-20", color: "from-pink-400 via-rose-500 to-red-400", shadow: "shadow-pink-400/50", left: "5%", delay: 0, duration: 14, scale: 1 },
-    { id: 2, size: "w-20 h-24", color: "from-amber-300 via-yellow-400 to-orange-400", shadow: "shadow-amber-400/50", left: "15%", delay: 2, duration: 18, scale: 1.1 },
-    { id: 3, size: "w-14 h-18", color: "from-sky-300 via-blue-400 to-indigo-400", shadow: "shadow-sky-400/50", left: "28%", delay: 5, duration: 15, scale: 0.9 },
-    { id: 4, size: "w-24 h-28", color: "from-emerald-300 via-green-400 to-teal-400", shadow: "shadow-emerald-400/50", left: "40%", delay: 1, duration: 20, scale: 1.25 },
-    { id: 5, size: "w-16 h-20", color: "from-purple-400 via-violet-500 to-fuchsia-400", shadow: "shadow-purple-400/50", left: "52%", delay: 7, duration: 16, scale: 1 },
-    { id: 6, size: "w-20 h-24", color: "from-rose-300 via-pink-400 to-purple-400", shadow: "shadow-pink-400/50", left: "65%", delay: 3, duration: 17, scale: 1.15 },
-    { id: 7, size: "w-14 h-18", color: "from-orange-300 via-amber-400 to-yellow-400", shadow: "shadow-orange-400/50", left: "78%", delay: 6, duration: 14, scale: 0.85 },
-    { id: 8, size: "w-22 h-26", color: "from-cyan-300 via-sky-400 to-blue-500", shadow: "shadow-cyan-400/50", left: "90%", delay: 4, duration: 19, scale: 1.2 },
-    { id: 9, size: "w-12 h-16", color: "from-lime-300 via-emerald-400 to-green-500", shadow: "shadow-lime-400/50", left: "22%", delay: 9, duration: 13, scale: 0.8 },
-    { id: 10, size: "w-18 h-22", color: "from-fuchsia-400 via-pink-500 to-rose-400", shadow: "shadow-fuchsia-400/50", left: "85%", delay: 8, duration: 15, scale: 1.05 },
+    { id: 1, size: "w-16 h-20 sm:w-20 sm:h-24", color: "from-pink-400 via-rose-500 to-red-400", shadow: "shadow-pink-400/40", left: "5%", delay: 0, duration: 14, icon: "⭐" },
+    { id: 2, size: "w-20 h-24 sm:w-24 sm:h-28", color: "from-amber-300 via-yellow-400 to-orange-400", shadow: "shadow-amber-400/40", left: "18%", delay: 2, duration: 18, icon: "🎨" },
+    { id: 3, size: "w-14 h-18 sm:w-16 sm:h-20", color: "from-sky-300 via-blue-400 to-indigo-400", shadow: "shadow-sky-400/40", left: "32%", delay: 5, duration: 15, icon: "🚀" },
+    { id: 4, size: "w-22 h-26 sm:w-26 sm:h-30", color: "from-emerald-300 via-green-400 to-teal-400", shadow: "shadow-emerald-400/40", left: "46%", delay: 1, duration: 20, icon: "🎈" },
+    { id: 5, size: "w-16 h-20 sm:w-20 sm:h-24", color: "from-purple-400 via-violet-500 to-fuchsia-400", shadow: "shadow-purple-400/40", left: "60%", delay: 7, duration: 16, icon: "✨" },
+    { id: 6, size: "w-20 h-24 sm:w-24 sm:h-28", color: "from-rose-300 via-pink-400 to-purple-400", shadow: "shadow-pink-400/40", left: "74%", delay: 3, duration: 17, icon: "🌟" },
+    { id: 7, size: "w-14 h-18 sm:w-16 sm:h-20", color: "from-orange-300 via-amber-400 to-yellow-400", shadow: "shadow-orange-400/40", left: "86%", delay: 6, duration: 14, icon: "🧸" },
+    { id: 8, size: "w-18 h-22 sm:w-20 sm:h-24", color: "from-cyan-300 via-sky-400 to-blue-500", shadow: "shadow-cyan-400/40", left: "94%", delay: 4, duration: 19, icon: "🌈" },
+  ];
+
+  // Tatlı uçuşan bulutlar
+  const clouds = [
+    { id: 1, top: "12%", left: "-10%", scale: 1.2, duration: 32, delay: 0 },
+    { id: 2, top: "40%", left: "-15%", scale: 0.9, duration: 38, delay: 8 },
+  ];
+
+  // Parıldayan Yıldızlar
+  const stars = [
+    { top: "10%", left: "12%", color: "text-amber-400", delay: 0 },
+    { top: "22%", left: "85%", color: "text-pink-400", delay: 1.5 },
+    { top: "45%", left: "8%", color: "text-sky-400", delay: 0.8 },
+    { top: "65%", left: "92%", color: "text-purple-400", delay: 2.2 },
   ];
 
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+    <div className="absolute inset-0 overflow-hidden pointer-events-none z-0 transform-gpu" style={{ willChange: "transform" }}>
       
-      {/* Dynamic Glowing Radial Gradients (Aceternity UI Glow) */}
-      <div className="absolute -top-40 -left-40 w-96 h-96 bg-gradient-to-br from-pink-300/40 via-purple-300/30 to-transparent rounded-full blur-3xl animate-pulse" />
-      <div className="absolute top-1/3 -right-40 w-[30rem] h-[30rem] bg-gradient-to-bl from-amber-300/40 via-orange-300/30 to-transparent rounded-full blur-3xl animate-pulse" style={{ animationDuration: "6s" }} />
-      <div className="absolute -bottom-20 left-1/3 w-[28rem] h-[28rem] bg-gradient-to-tr from-sky-300/40 via-emerald-300/30 to-transparent rounded-full blur-3xl animate-pulse" style={{ animationDuration: "8s" }} />
+      {/* 1. Aceternity UI Grid & Dot Pattern (GPU Dostu) */}
+      <div className="absolute inset-0 bg-[radial-gradient(#cbd5e1_1.2px,transparent_1.2px)] [background-size:24px_24px] opacity-35 [mask-image:radial-gradient(ellipse_at_center,transparent_10%,black_90%)]" />
 
-      {/* Floating Framer-Motion Aceternity Balonlar */}
+      {/* 2. Donanım İvmelendirmeli Yumuşak Radial Işıklar (Ağır CSS Blur Filtresi Yerine Sıfır Kasan Radial Gradient) */}
+      <div
+        className="absolute -top-32 -left-32 w-[32rem] h-[32rem] rounded-full pointer-events-none"
+        style={{
+          background: "radial-gradient(circle, rgba(251,191,36,0.35) 0%, rgba(249,115,22,0.2) 40%, transparent 70%)"
+        }}
+      />
+
+      <div
+        className="absolute top-1/4 -right-32 w-[34rem] h-[34rem] rounded-full pointer-events-none"
+        style={{
+          background: "radial-gradient(circle, rgba(56,189,248,0.35) 0%, rgba(99,102,241,0.2) 40%, transparent 70%)"
+        }}
+      />
+
+      <div
+        className="absolute bottom-10 left-1/4 w-[30rem] h-[30rem] rounded-full pointer-events-none"
+        style={{
+          background: "radial-gradient(circle, rgba(244,114,182,0.35) 0%, rgba(168,85,247,0.2) 40%, transparent 70%)"
+        }}
+      />
+
+      {/* 3. Uçuşan Bulutlar (Hafif ve Akıcı) */}
+      {clouds.map((c) => (
+        <motion.div
+          key={c.id}
+          initial={{ x: "-20vw" }}
+          animate={{ x: "120vw" }}
+          transition={{ duration: c.duration, repeat: Infinity, ease: "linear", delay: c.delay }}
+          style={{ top: c.top, transform: `scale(${c.scale}) translateZ(0)` }}
+          className="absolute opacity-55 text-slate-300 text-6xl select-none will-change-transform"
+        >
+          ☁️
+        </motion.div>
+      ))}
+
+      {/* 4. Yanıp Sönen Yıldızlar */}
+      {stars.map((s, idx) => (
+        <motion.div
+          key={idx}
+          animate={{
+            scale: [0.85, 1.2, 0.85],
+            opacity: [0.3, 0.9, 0.3],
+          }}
+          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: s.delay }}
+          style={{ top: s.top, left: s.left, transform: "translateZ(0)" }}
+          className={`absolute w-5 h-5 ${s.color} font-black text-xl select-none will-change-transform`}
+        >
+          ✨
+        </motion.div>
+      ))}
+
+      {/* 5. Framer-Motion Aceternity Süzülen Balonlar (GPU Destekli 60 FPS) */}
       {balloons.map((b) => (
         <motion.div
           key={b.id}
-          initial={{ y: "110vh", x: 0, rotate: -5, opacity: 0 }}
+          initial={{ y: "115vh", x: 0, rotate: -5, opacity: 0 }}
           animate={{
-            y: ["110vh", "-20vh"],
-            x: [0, 15, -15, 20, -10, 0],
-            rotate: [-5, 8, -8, 6, -5],
-            opacity: [0, 0.9, 0.9, 0.9, 0],
+            y: ["115vh", "-25vh"],
+            x: [0, 14, -14, 18, -10, 0],
+            rotate: [-4, 8, -8, 6, -4],
+            opacity: [0, 0.95, 0.95, 0.95, 0],
           }}
           transition={{
             duration: b.duration,
@@ -42,25 +104,27 @@ export const AceternityBalloons = () => {
             delay: b.delay,
             ease: "easeInOut",
           }}
-          style={{ left: b.left }}
-          className="absolute bottom-0 flex flex-col items-center group cursor-pointer"
+          style={{ left: b.left, transform: "translateZ(0)" }}
+          className="absolute bottom-0 flex flex-col items-center group cursor-pointer will-change-transform"
         >
           {/* Balon Gövdesi */}
           <div
-            className={`relative ${b.size} rounded-[50%_50%_50%_50%/40%_40%_60%_60%] bg-gradient-to-tr ${b.color} shadow-2xl ${b.shadow} border-2 border-white/60 backdrop-blur-sm flex items-center justify-center`}
+            className={`relative ${b.size} rounded-[50%_50%_50%_50%/40%_40%_60%_60%] bg-gradient-to-tr ${b.color} shadow-lg ${b.shadow} border-2 border-white/80 flex items-center justify-center`}
           >
             {/* Balon Işık Parıltısı / Reflection */}
-            <div className="absolute top-2 left-3 w-4 h-6 bg-white/50 rounded-full rotate-[-30deg] blur-[1px]" />
-            <div className="absolute top-4 left-5 w-2 h-2 bg-white/80 rounded-full" />
+            <div className="absolute top-2 left-3 w-3.5 h-6 bg-white/60 rounded-full rotate-[-30deg]" />
+            <div className="absolute top-3.5 left-4.5 w-1.5 h-1.5 bg-white/90 rounded-full" />
             
-            {/* Minik Sevimli Yıldız Motifleri */}
-            <span className="text-white/40 text-xs font-black select-none pointer-events-none">⭐</span>
+            {/* Minik Sevimli Motif */}
+            <span className="text-white/90 text-sm sm:text-base font-black select-none drop-shadow-sm">
+              {b.icon}
+            </span>
           </div>
 
-          {/* Balon Bağlantı Düğümü */}
+          {/* Balon Düğümü */}
           <div className="w-2.5 h-2 bg-amber-600/80 rounded-b-sm -mt-0.5" />
 
-          {/* İp / Kıvrımlı Balon İpi */}
+          {/* Kıvrımlı İp */}
           <svg className="w-4 h-12 text-slate-400/60 -mt-0.5" viewBox="0 0 20 60" fill="none">
             <path
               d="M10 0 Q16 15 10 30 Q4 45 10 60"
@@ -72,8 +136,6 @@ export const AceternityBalloons = () => {
         </motion.div>
       ))}
 
-      {/* Işıltılı Sparkle Yıldız Parçacıkları (Aceternity Sparkles Grid Effect) */}
-      <div className="absolute inset-0 bg-[radial-gradient(#f59e0b_1px,transparent_1px)] [background-size:32px_32px] opacity-25" />
     </div>
   );
 };
