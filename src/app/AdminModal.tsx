@@ -202,7 +202,7 @@ export const DEFAULT_GALLERY_ITEMS: GalleryItem[] = [
   },
   {
     id: "3",
-    title: "Robotik Kodlama Atölyesi",
+    title: "Yaratıcı Drama Atölyesi",
     category: "etkinlik",
     img: "https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&w=800&q=80"
   },
@@ -703,32 +703,32 @@ export default function AdminModal({ isOpen, onClose }: AdminModalProps) {
   const completedCount = registrations.filter((r) => r.status === "tamamlandi").length;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-slate-950/85 backdrop-blur-md transition-all duration-300 animate-in fade-in">
-      <div className="bg-slate-900 w-full max-w-6xl rounded-3xl shadow-2xl overflow-hidden border border-slate-800 flex flex-col h-[94vh] max-h-[880px] text-slate-100 font-sans">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-1 sm:p-4 bg-slate-950/85 backdrop-blur-md transition-all duration-300 animate-in fade-in">
+      <div className="bg-slate-900 w-full max-w-6xl rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden border border-slate-800 flex flex-col h-[98vh] sm:h-[94vh] max-h-[880px] text-slate-100 font-sans">
         
         {/* TOP BAR / HEADER */}
-        <div className="bg-slate-900 px-6 py-4 flex items-center justify-between border-b border-slate-800 shrink-0">
-          <div className="flex items-center gap-3.5">
-            <img src="/logo.svg" alt="Yıldız Anaokulu Logo" className="h-10 w-auto object-contain" />
-            <div>
-              <div className="flex items-center gap-2">
-                <h2 className="font-bold text-lg text-white tracking-tight">Yönetici Paneli</h2>
-                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/10 text-amber-400 border border-amber-500/20">
+        <div className="bg-slate-900 px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between border-b border-slate-800 shrink-0 gap-2">
+          <div className="flex items-center gap-2.5 sm:gap-3.5 min-w-0">
+            <img src="/logo.svg" alt="Yıldız Anaokulu Logo" className="h-8 sm:h-10 w-auto object-contain shrink-0" />
+            <div className="min-w-0">
+              <div className="flex items-center gap-1.5 sm:gap-2">
+                <h2 className="font-bold text-sm sm:text-lg text-white tracking-tight truncate">Yönetici Paneli</h2>
+                <span className="px-2 py-0.5 rounded-full text-[9px] sm:text-[10px] font-bold bg-amber-500/10 text-amber-400 border border-amber-500/20 shrink-0">
                   v2.0
                 </span>
               </div>
-              <p className="text-xs text-slate-400 font-medium">Mahmutbey Yıldız Anaokulu Yönetimi</p>
+              <p className="text-[10px] sm:text-xs text-slate-400 font-medium truncate hidden sm:block">Mahmutbey Yıldız Anaokulu Yönetimi</p>
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
             {isLoggedIn && (
               <button
                 onClick={handleLogout}
-                className="px-3.5 py-1.5 rounded-xl bg-slate-800/80 hover:bg-rose-500/10 text-slate-300 hover:text-rose-400 border border-slate-700/60 hover:border-rose-500/30 text-xs font-semibold flex items-center gap-2 transition-all duration-200"
+                className="px-2.5 sm:px-3.5 py-1.5 rounded-xl bg-slate-800/80 hover:bg-rose-500/10 text-slate-300 hover:text-rose-400 border border-slate-700/60 hover:border-rose-500/30 text-xs font-semibold flex items-center gap-1.5 transition-all duration-200"
               >
                 <LogOut className="w-3.5 h-3.5" />
-                <span>Çıkış Yap</span>
+                <span className="hidden sm:inline">Çıkış Yap</span>
               </button>
             )}
             <button

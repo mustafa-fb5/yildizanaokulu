@@ -22,7 +22,8 @@ import {
   ShieldCheck,
   Send,
   Loader2,
-  Database
+  Database,
+  Instagram
 } from "lucide-react";
 import { db } from "@/lib/firebase";
 import { collection, addDoc, serverTimestamp, doc, onSnapshot } from "firebase/firestore";
@@ -161,14 +162,14 @@ export default function Home() {
       emoji: "❤️"
     },
     {
-      icon: <Cpu className="w-8 h-8" />,
-      title: "Robotik & Kodlama",
-      desc: "Erken yaşta eğlenceli robotik kitler ve algoritma oyunlarıyla çocuklarımızın analitik düşünme ve problem çözme yetileri gelişir.",
-      badge: "STEM & Algoritma",
+      icon: <Award className="w-8 h-8" />,
+      title: "Oyun & Hareket Atölyesi",
+      desc: "Çocuklarımızın ince ve kaba motor becerilerini geliştiren, fiziksel koordinasyon ve beden farkındalığı sağlayan eğlenceli aktiviteler sunarız.",
+      badge: "Fiziksel Gelişim",
       bg: "from-emerald-400 to-teal-500",
       light: "bg-emerald-50",
       border: "border-emerald-200",
-      emoji: "🤖"
+      emoji: "🏃"
     },
     {
       icon: <BrainCircuit className="w-8 h-8" />,
@@ -236,18 +237,18 @@ export default function Home() {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ fontFamily: 'Nunito, sans-serif' }}>
+    <div className="min-h-screen flex flex-col w-full max-w-full overflow-x-hidden" style={{ fontFamily: 'Nunito, sans-serif' }}>
 
       {/* ===== TOP BAR ===== */}
-      <div className="bg-gradient-to-r from-violet-600 via-purple-600 to-pink-600 text-white text-xs py-2.5 px-4">
+      <div className="bg-gradient-to-r from-violet-600 via-purple-600 to-pink-600 text-white text-xs py-2.5 px-4 w-full">
         <div className="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
-          <div className="flex items-center gap-5 flex-wrap">
-            <span className="flex items-center gap-1.5">
-              <MapPin className="w-3.5 h-3.5 text-yellow-300" />
-              {siteTexts.address}
+          <div className="flex items-center gap-3 sm:gap-5 flex-wrap">
+            <span className="flex items-center gap-1.5 min-w-0">
+              <MapPin className="w-3.5 h-3.5 text-yellow-300 shrink-0" />
+              <span className="truncate max-w-[240px] sm:max-w-none">{siteTexts.address}</span>
             </span>
-            <a href={`tel:${siteTexts.phone}`} className="flex items-center gap-1.5 hover:text-yellow-300 transition-colors">
-              <Phone className="w-3.5 h-3.5 text-yellow-300" />
+            <a href={`tel:${siteTexts.phone}`} className="flex items-center gap-1.5 hover:text-yellow-300 transition-colors shrink-0">
+              <Phone className="w-3.5 h-3.5 text-yellow-300 shrink-0" />
               {siteTexts.phone}
             </a>
             <span className="hidden md:flex items-center gap-1.5">
@@ -263,13 +264,13 @@ export default function Home() {
       </div>
 
       {/* ===== NAVBAR ===== */}
-      <header className="sticky top-0 z-40 bg-white/98 backdrop-blur-md shadow-md border-b-4 border-amber-400">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
-          <a href="#hero" className="relative flex items-center hover:opacity-90 transition-opacity z-10">
+      <header className="sticky top-0 z-40 bg-white/98 backdrop-blur-md shadow-md border-b-4 border-amber-400 w-full">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 sm:py-3 flex items-center justify-between gap-2">
+          <a href="#hero" className="relative flex items-center hover:opacity-90 transition-opacity z-10 shrink-0">
             <img
               src="/logo.svg"
               alt="Mahmutbey Yıldız Anaokulu Logo"
-              className="h-20 sm:h-24 w-auto max-w-none object-contain -my-5 drop-shadow-md"
+              className="h-14 sm:h-20 md:h-24 w-auto max-w-[180px] sm:max-w-none object-contain -my-2 sm:-my-4 drop-shadow-md"
             />
           </a>
 
@@ -359,15 +360,15 @@ export default function Home() {
           <div className="space-y-6 animate-fade-in-up">
 
             {/* Rozet */}
-            <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/95 text-amber-700 text-sm font-black shadow-xl border-2 border-amber-300 badge-pulse">
-              <span className="text-xl">🌟</span>
-              <span>{siteTexts.heroBadgeText || "Mahmutbey Yıldız Anaokulu — 2026-2027 Kayıtları Açık!"}</span>
-              <span className="text-xl">🌈</span>
+            <div className="inline-flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-white/95 text-amber-700 text-xs sm:text-sm font-black shadow-xl border-2 border-amber-300 badge-pulse max-w-full">
+              <span className="text-lg sm:text-xl shrink-0">🌟</span>
+              <span className="text-center leading-tight">{siteTexts.heroBadgeText || "Mahmutbey Yıldız Anaokulu — 2026-2027 Kayıtları Açık!"}</span>
+              <span className="text-lg sm:text-xl shrink-0">🌈</span>
             </div>
 
             {/* Başlık */}
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black leading-[1.15] text-slate-800 max-w-4xl mx-auto">
-              <span className="block bg-clip-text text-transparent bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500" style={{ lineHeight: '1.25' }}>
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black leading-tight text-slate-800 max-w-4xl mx-auto break-words">
+              <span className="block bg-clip-text text-transparent bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500 py-1">
                 {siteTexts.heroTitle}
               </span>
             </h1>
@@ -380,14 +381,14 @@ export default function Home() {
             <div className="flex flex-wrap justify-center gap-2.5 pt-2">
               {[
                 { emoji: '🎨', text: 'Yaratıcı Atölye', bg: 'bg-amber-100 text-amber-700 border-amber-300' },
-                { emoji: '🤖', text: 'Robotik & Kodlama', bg: 'bg-sky-100 text-sky-700 border-sky-300' },
+                { emoji: '🏃', text: 'Oyun & Hareket', bg: 'bg-sky-100 text-sky-700 border-sky-300' },
                 { emoji: '🌍', text: 'İngilizce', bg: 'bg-emerald-100 text-emerald-700 border-emerald-300' },
                 { emoji: '🧠', text: 'Akıl Oyunları', bg: 'bg-rose-100 text-rose-700 border-rose-300' },
                 { emoji: '🛡️', text: '7/24 Güvenlik', bg: 'bg-purple-100 text-purple-700 border-purple-300' },
               ].map((tag, i) => (
                 <span
                   key={i}
-                  className={`flex items-center gap-1.5 px-4 py-2.5 rounded-full text-xs sm:text-sm font-black border-2 shadow-sm hover:shadow-md hover:scale-105 transition-all duration-200 ${tag.bg}`}
+                  className={`flex items-center gap-1.5 px-3 sm:px-4 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-black border-2 shadow-sm hover:shadow-md hover:scale-105 transition-all duration-200 ${tag.bg}`}
                 >
                   <span className="text-lg">{tag.emoji}</span>
                   <span>{tag.text}</span>
@@ -397,16 +398,18 @@ export default function Home() {
 
             {/* CTA butonlar */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
-              <button
-                onClick={() => setModalOpen(true)}
-                className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-black text-base shadow-xl shadow-amber-400/40 hover:-translate-y-1 hover:shadow-2xl transition-all duration-300 border-b-4 border-orange-700 flex items-center justify-center gap-2"
+              <a
+                href="https://www.instagram.com/p/DbIQkDhCuAi/?igsh=emoxeHZ0MzVubHU5"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 rounded-2xl bg-gradient-to-r from-pink-500 via-purple-500 to-amber-500 hover:from-pink-600 hover:via-purple-600 hover:to-amber-600 text-white font-black text-sm sm:text-base shadow-xl shadow-pink-500/30 hover:-translate-y-1 hover:shadow-2xl transition-all duration-300 border-b-4 border-purple-700 flex items-center justify-center gap-2"
               >
-                <span className="text-xl">✨</span> {siteTexts.heroCtaBtnText || "Hemen Ön Kayıt Oluştur"}
-              </button>
+                <Instagram className="w-5 h-5" /> Instagram
+              </a>
               <a
                 href={`https://wa.me/90${(siteTexts.whatsappPhone || "05414470608").replace(/[^0-9]/g, "")}?text=Merhaba,%20Mahmutbey%20Y%C4%B1ld%C4%B1z%20Anaokulu%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum`}
                 target="_blank" rel="noopener noreferrer"
-                className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-emerald-500 to-green-500 hover:from-emerald-600 hover:to-green-600 text-white font-black text-base shadow-xl shadow-emerald-400/40 hover:-translate-y-1 hover:shadow-2xl transition-all duration-300 border-b-4 border-green-700 flex items-center justify-center gap-2"
+                className="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 rounded-2xl bg-gradient-to-r from-emerald-500 to-green-500 hover:from-emerald-600 hover:to-green-600 text-white font-black text-sm sm:text-base shadow-xl shadow-emerald-400/40 hover:-translate-y-1 hover:shadow-2xl transition-all duration-300 border-b-4 border-green-700 flex items-center justify-center gap-2"
               >
                 <MessageCircle className="w-5 h-5" /> {siteTexts.heroWhatsappBtnText || "WhatsApp'tan Bilgi Al"}
               </a>
@@ -444,7 +447,7 @@ export default function Home() {
         <div className="absolute bottom-0 left-0 w-48 h-48 bg-purple-50 rounded-tr-full -z-0" />
 
         <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-gradient-to-br from-amber-50/60 via-purple-50/40 to-pink-50/60 rounded-3xl p-8 sm:p-12 border-2 border-amber-200/80 shadow-xl space-y-8 text-center md:text-left">
+          <div className="bg-gradient-to-br from-amber-50/60 via-purple-50/40 to-pink-50/60 rounded-3xl p-5 sm:p-8 md:p-12 border-2 border-amber-200/80 shadow-xl space-y-6 sm:space-y-8 text-center md:text-left">
             <div className="flex flex-col md:flex-row items-center justify-between gap-6 border-b border-purple-200/60 pb-6">
               <div>
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-100 text-purple-700 text-sm font-black border-2 border-purple-200 mb-3">
@@ -595,7 +598,7 @@ export default function Home() {
       </section>
 
       {/* ===== İLETİŞİM FOOTER ===== */}
-      <section id="info-footer" className="py-20 relative overflow-hidden" style={{
+      <section id="info-footer" className="py-14 sm:py-20 relative overflow-hidden" style={{
         background: 'linear-gradient(135deg, #1e1b4b 0%, #312e81 30%, #4c1d95 60%, #1e1b4b 100%)'
       }}>
         {/* Dekor daireler */}
@@ -603,7 +606,7 @@ export default function Home() {
         <div className="absolute bottom-0 right-0 w-80 h-80 bg-pink-400/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-12 gap-12">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
             <div className="lg:col-span-5 space-y-8 text-white">
               <div>
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-400/20 text-amber-300 text-sm font-black mb-5 border border-amber-400/30">
@@ -641,18 +644,18 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="lg:col-span-7 rounded-3xl overflow-hidden shadow-2xl border-2 border-white/20 min-h-[350px]">
+            <div className="lg:col-span-7 rounded-3xl overflow-hidden shadow-2xl border-2 border-white/20">
               <iframe
                 title="Mahmutbey Yıldız Anaokulu Harita Konumu"
                 src="https://maps.google.com/maps?q=Mahmutbey+Mahallesi+Karao%C4%9Flano%C4%9Flu+Caddesi+2602+Sokak+No+1%2FC+Ba%C4%9Fc%C4%B1lar+%C4%B0stanbul&t=&z=16&ie=UTF8&iwloc=&output=embed"
-                className="w-full h-full min-h-[380px] border-0 grayscale hover:grayscale-0 transition-all duration-500"
+                className="w-full h-full min-h-[280px] sm:min-h-[380px] border-0 grayscale hover:grayscale-0 transition-all duration-500"
                 allowFullScreen
                 loading="lazy"
               />
             </div>
           </div>
 
-          <div className="mt-14 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between text-sm text-indigo-300 gap-4">
+          <div className="mt-10 sm:mt-14 pt-6 sm:pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between text-xs sm:text-sm text-indigo-300 gap-4">
             <p className="font-semibold">© 2026 Özel Mahmutbey Yıldız Anaokulu. Tüm hakları saklıdır. 🌟</p>
             <button onClick={() => setAdminModalOpen(true)} className="hover:text-amber-400 transition-colors font-bold">
               Yönetici Paneli Girişi

@@ -3,9 +3,21 @@
 @tailwind utilities;
 
 @layer base {
+  *, ::before, ::after {
+    box-sizing: border-box;
+  }
+
   html {
+    overflow-x: hidden;
     scroll-behavior: smooth;
     font-family: 'Nunito', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  body {
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100vw;
+    position: relative;
   }
 }
 
@@ -141,6 +153,8 @@
   min-height: 100vh;
   display: flex;
   align-items: center;
+  width: 100%;
+  max-width: 100vw;
 }
 
 .cloud {

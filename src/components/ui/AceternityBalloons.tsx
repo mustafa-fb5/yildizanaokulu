@@ -12,7 +12,7 @@ export const AceternityBalloons = () => {
     { id: 5, size: "w-16 h-20 sm:w-20 sm:h-24", color: "from-purple-400 via-violet-500 to-fuchsia-400", shadow: "shadow-purple-400/40", left: "60%", delay: 7, duration: 16, icon: "✨" },
     { id: 6, size: "w-20 h-24 sm:w-24 sm:h-28", color: "from-rose-300 via-pink-400 to-purple-400", shadow: "shadow-pink-400/40", left: "74%", delay: 3, duration: 17, icon: "🌟" },
     { id: 7, size: "w-14 h-18 sm:w-16 sm:h-20", color: "from-orange-300 via-amber-400 to-yellow-400", shadow: "shadow-orange-400/40", left: "86%", delay: 6, duration: 14, icon: "🧸" },
-    { id: 8, size: "w-18 h-22 sm:w-20 sm:h-24", color: "from-cyan-300 via-sky-400 to-blue-500", shadow: "shadow-cyan-400/40", left: "94%", delay: 4, duration: 19, icon: "🌈" },
+    { id: 8, size: "w-18 h-22 sm:w-20 sm:h-24", color: "from-cyan-300 via-sky-400 to-blue-500", shadow: "shadow-cyan-400/40", left: "88%", delay: 4, duration: 19, icon: "🌈" },
   ];
 
   // Tatlı uçuşan bulutlar
@@ -35,34 +35,34 @@ export const AceternityBalloons = () => {
       {/* 1. Aceternity UI Grid & Dot Pattern (GPU Dostu) */}
       <div className="absolute inset-0 bg-[radial-gradient(#cbd5e1_1.2px,transparent_1.2px)] [background-size:24px_24px] opacity-35 [mask-image:radial-gradient(ellipse_at_center,transparent_10%,black_90%)]" />
 
-      {/* 2. Donanım İvmelendirmeli Yumuşak Radial Işıklar (Ağır CSS Blur Filtresi Yerine Sıfır Kasan Radial Gradient) */}
+      {/* 2. Donanım İvmelendirmeli Yumuşak Radial Işıklar (Taşma Olmayan Boyutlarla) */}
       <div
-        className="absolute -top-32 -left-32 w-[32rem] h-[32rem] rounded-full pointer-events-none"
+        className="absolute -top-20 -left-20 w-[60%] max-w-[32rem] h-[60%] max-h-[32rem] rounded-full pointer-events-none"
         style={{
           background: "radial-gradient(circle, rgba(251,191,36,0.35) 0%, rgba(249,115,22,0.2) 40%, transparent 70%)"
         }}
       />
 
       <div
-        className="absolute top-1/4 -right-32 w-[34rem] h-[34rem] rounded-full pointer-events-none"
+        className="absolute top-1/4 right-0 w-[60%] max-w-[34rem] h-[60%] max-h-[34rem] rounded-full pointer-events-none"
         style={{
           background: "radial-gradient(circle, rgba(56,189,248,0.35) 0%, rgba(99,102,241,0.2) 40%, transparent 70%)"
         }}
       />
 
       <div
-        className="absolute bottom-10 left-1/4 w-[30rem] h-[30rem] rounded-full pointer-events-none"
+        className="absolute bottom-10 left-[15%] w-[55%] max-w-[30rem] h-[55%] max-h-[30rem] rounded-full pointer-events-none"
         style={{
           background: "radial-gradient(circle, rgba(244,114,182,0.35) 0%, rgba(168,85,247,0.2) 40%, transparent 70%)"
         }}
       />
 
-      {/* 3. Uçuşan Bulutlar (Hafif ve Akıcı) */}
+      {/* 3. Uçuşan Bulutlar (Hafif ve Akıcı - % bazlı taşmasız) */}
       {clouds.map((c) => (
         <motion.div
           key={c.id}
-          initial={{ x: "-20vw" }}
-          animate={{ x: "120vw" }}
+          initial={{ x: "-15%" }}
+          animate={{ x: "110%" }}
           transition={{ duration: c.duration, repeat: Infinity, ease: "linear", delay: c.delay }}
           style={{ top: c.top, transform: `scale(${c.scale}) translateZ(0)` }}
           className="absolute opacity-55 text-slate-300 text-6xl select-none will-change-transform"
