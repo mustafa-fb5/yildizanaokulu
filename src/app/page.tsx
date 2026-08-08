@@ -122,29 +122,9 @@ export default function Home() {
 
   const features = [
     {
-      icon: <BookOpen className="w-8 h-8" />,
-      title: "MEB Müfredatı",
-      desc: "Eğitim programımız, Millî Eğitim Bakanlığı müfredatıyla tam uyumlu, çocukların yaş ve gelişim düzeylerine özel şekilde yürütülür.",
-      badge: "Müfredat Uyumlu",
-      bg: "from-amber-400 to-orange-500",
-      light: "bg-amber-50",
-      border: "border-amber-200",
-      emoji: "📚"
-    },
-    {
-      icon: <Languages className="w-8 h-8" />,
-      title: "İngilizce Eğitimi",
-      desc: "Oyun, şarkı, tiyatro ve interaktif etkinliklerle zenginleştirilmiş erken yaş İngilizce eğitimiyle çocuklar dili doğal bir süreçte öğrenir.",
-      badge: "Erken Yaş Dil",
-      bg: "from-sky-400 to-blue-500",
-      light: "bg-sky-50",
-      border: "border-sky-200",
-      emoji: "🌍"
-    },
-    {
       icon: <Sparkles className="w-8 h-8" />,
-      title: "Sanat & Drama Atölyeleri",
-      desc: "Çocuklarımızın hayal gücünü geliştiren resim, müzik, orff ve yaratıcı drama etkinlikleriyle özgüven kazanmalarını sağlıyoruz.",
+      title: "Sanat Atölyeleri",
+      desc: "Resim, müzik, el sanatları ve hayal gücünü harekete geçiren atölye çalışmalarıyla çocuklarımızın estetik bakış açılarını ve özgün yaratıcılıklarını geliştiriyoruz.",
       badge: "Yaratıcı Gelişim",
       bg: "from-rose-400 to-pink-500",
       light: "bg-rose-50",
@@ -152,19 +132,19 @@ export default function Home() {
       emoji: "🎨"
     },
     {
-      icon: <HeartHandshake className="w-8 h-8" />,
-      title: "Erdem ve Değerler",
-      desc: "Çocuklarımızda milli, manevi, ahlaki ve kültürel değerlerimizi yaşatarak sevgi, saygı ve paylaşma odaklı karakter gelişimini destekleriz.",
-      badge: "Değerler Eğitimi",
-      bg: "from-purple-400 to-violet-500",
-      light: "bg-purple-50",
-      border: "border-purple-200",
-      emoji: "❤️"
+      icon: <Languages className="w-8 h-8" />,
+      title: "İngilizce",
+      desc: "Erken yaş dil öğrenimine özel oyunlar, interaktif şarkılar ve günlük yaşam aktiviteleriyle çocuklarımızın yabancı dili doğal sürecinde öğrenmelerini sağlıyoruz.",
+      badge: "Erken Yaş Dil",
+      bg: "from-sky-400 to-blue-500",
+      light: "bg-sky-50",
+      border: "border-sky-200",
+      emoji: "🗣️"
     },
     {
       icon: <Award className="w-8 h-8" />,
-      title: "Oyun & Hareket Atölyesi",
-      desc: "Çocuklarımızın ince ve kaba motor becerilerini geliştiren, fiziksel koordinasyon ve beden farkındalığı sağlayan eğlenceli aktiviteler sunarız.",
+      title: "Oyun & Hareket",
+      desc: "İnce ve kaba motor becerilerini güçlendiren, denge, koordinasyon ve beden farkındalığını destekleyen eğlenceli fiziksel aktivite ve hareket programları sunuyoruz.",
       badge: "Fiziksel Gelişim",
       bg: "from-emerald-400 to-teal-500",
       light: "bg-emerald-50",
@@ -173,13 +153,33 @@ export default function Home() {
     },
     {
       icon: <BrainCircuit className="w-8 h-8" />,
-      title: "Zeka & Akıl Oyunları",
-      desc: "Lisanslı zeka oyunlarıyla çocuklarımızın dikkat, strateji, odaklanma ve uzamsal algı yeteneklerini keyifle güçlendiririz.",
+      title: "Akıl ve Zeka Oyunları",
+      desc: "Strateji, mantık, odaklanma ve problem çözme yeteneklerini artıran lisanslı akıl ve zeka oyunlarıyla çocuklarımızın zihinsel potansiyelini geliştiriyoruz.",
       badge: "Zihinsel Gelişim",
       bg: "from-indigo-400 to-blue-600",
       light: "bg-indigo-50",
       border: "border-indigo-200",
       emoji: "🧠"
+    },
+    {
+      icon: <HeartHandshake className="w-8 h-8" />,
+      title: "Değerler Eğitimi",
+      desc: "Sevgi, saygı, dürüstlük, paylaşma ve arkadaşlık gibi temel insani ve ahlaki değerleri günlük yaşam etkinlikleriyle yaşatarak karakter gelişimini destekliyoruz.",
+      badge: "Karakter Gelişimi",
+      bg: "from-purple-400 to-violet-500",
+      light: "bg-purple-50",
+      border: "border-purple-200",
+      emoji: "🤝"
+    },
+    {
+      icon: <ShieldCheck className="w-8 h-8" />,
+      title: "7/24 Güvenlik",
+      desc: "Kesintisiz kamera izleme sistemleri, kontrollü giriş-çıkışlar ve yüksek güvenlik standartlarıyla evlatlarınızın gün boyu emniyetli ve huzurlu bir ortamda olmasını sağlıyoruz.",
+      badge: "Güvenli Kampüs",
+      bg: "from-amber-400 to-orange-500",
+      light: "bg-amber-50",
+      border: "border-amber-200",
+      emoji: "🛡️"
     }
   ];
 
@@ -380,11 +380,12 @@ export default function Home() {
             {/* Özellik etiketleri */}
             <div className="flex flex-wrap justify-center gap-2.5 pt-2">
               {[
-                { emoji: '🎨', text: 'Yaratıcı Atölye', bg: 'bg-amber-100 text-amber-700 border-amber-300' },
-                { emoji: '🏃', text: 'Oyun & Hareket', bg: 'bg-sky-100 text-sky-700 border-sky-300' },
-                { emoji: '🌍', text: 'İngilizce', bg: 'bg-emerald-100 text-emerald-700 border-emerald-300' },
-                { emoji: '🧠', text: 'Akıl Oyunları', bg: 'bg-rose-100 text-rose-700 border-rose-300' },
-                { emoji: '🛡️', text: '7/24 Güvenlik', bg: 'bg-purple-100 text-purple-700 border-purple-300' },
+                { emoji: '🎨', text: 'Sanat Atölyeleri', bg: 'bg-rose-100 text-rose-700 border-rose-300' },
+                { emoji: '🗣️', text: 'İngilizce', bg: 'bg-sky-100 text-sky-700 border-sky-300' },
+                { emoji: '🏃', text: 'Oyun & Hareket', bg: 'bg-emerald-100 text-emerald-700 border-emerald-300' },
+                { emoji: '🧠', text: 'Akıl ve Zeka Oyunları', bg: 'bg-indigo-100 text-indigo-700 border-indigo-300' },
+                { emoji: '🤝', text: 'Değerler Eğitimi', bg: 'bg-purple-100 text-purple-700 border-purple-300' },
+                { emoji: '🛡️', text: '7/24 Güvenlik', bg: 'bg-amber-100 text-amber-700 border-amber-300' },
               ].map((tag, i) => (
                 <span
                   key={i}
